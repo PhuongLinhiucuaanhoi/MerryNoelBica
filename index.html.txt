@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Thiệp Giáng Sinh</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(#0b3d2e, #145a32);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Georgia', serif;
+}
+
+/* PHONG BÌ */
+.envelope {
+    width: 200px;
+    height: 140px;
+    background: #f8f1e7;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.envelope:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-top: 70px solid #e6d5bd;
+}
+
+/* HỘP NHẬP MẬT KHẨU */
+.password-box {
+    display: none;
+    position: absolute;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.password-box input {
+    padding: 8px;
+    width: 150px;
+    text-align: center;
+}
+
+.password-box button {
+    margin-top: 10px;
+    padding: 6px 15px;
+    background: #c0392b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* THIỆP */
+.card {
+    display: none;
+    background: #fffaf0;
+    width: 300px;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.9);}
+    to {opacity: 1; transform: scale(1);}
+}
+
+h1 {
+    color: #c0392b;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PHONG BÌ -->
+<div class="envelope" onclick="showPassword()"></div>
+
+<!-- NHẬP MẬT KHẨU -->
+<div class="password-box" id="passwordBox">
+    <p>🔐 Nhập mật khẩu</p>
+    <input type="password" id="password">
+    <br>
+    <button onclick="checkPassword()">Mở thư</button>
+</div>
+
+<!-- THIỆP GIÁNG SINH -->
+<div class="card" id="card">
+    <h1>🎄 Merry Christmas 🎄</h1>
+    <p>
+        Chúc bạn một mùa Giáng Sinh an lành,<br>
+        ấm áp và tràn đầy yêu thương ❤️
+    </p>
+</div>
+
+<!-- NHẠC NOEL -->
+<audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<script>
+function showPassword() {
+    document.querySelector('.envelope').style.display = 'none';
+    document.getElementById('passwordBox').style.display = 'block';
+}
+
+function checkPassword() {
+    const correctPassword = "noel2024"; // ĐỔI MẬT KHẨU Ở ĐÂY
+    const input = document.getElementById('password').value;
+
+    if (input === correctPassword) {
+        document.getElementById('passwordBox').style.display = 'none';
+        document.getElementById('card').style.display = 'block';
+        document.getElementById('music').play();
+    } else {
+        alert("Sai mật khẩu rồi 🎅");
+    }
+}
+</script>
+
+</body>
+</html>
