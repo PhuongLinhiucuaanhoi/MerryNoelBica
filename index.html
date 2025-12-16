@@ -3,33 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Christmas Card</title>
+<title>Christmas Letter</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-  height:100vh;
-  overflow:hidden;
-  font-family:'Baloo 2', cursive;
-}
+body{height:100vh;overflow:hidden;font-family:'Baloo 2',cursive}
 
 /* BACKGROUND */
 .background{
-  position:fixed; inset:0;
-  background:
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-    url("background.jpg") center/cover no-repeat;
+  position:fixed;inset:0;
+  background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+  url("background.jpg") center/cover no-repeat;
   z-index:-3;
 }
 
 /* SNOW */
-#snow{
-  position:fixed; inset:0;
-  pointer-events:none;
-  z-index:-2;
-}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:-2}
 
 /* MAIN */
 .container{
@@ -37,19 +28,19 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  padding-top:40px; /* ĐẨY CAO TOÀN BỘ */
+  padding-top:40px;
 }
 
 .hint{
   color:#fff;
-  font-size:18px;
-  margin-bottom:20px;
+  font-size:20px;
+  margin-bottom:16px;
 }
 
 .girl{
   width:70%;
   max-width:320px;
-  margin-bottom:60px; /* CHỪA CHỖ CHO KHĂN */
+  margin-bottom:70px;
 }
 
 #scarf{
@@ -62,34 +53,40 @@ body{
 
 /* OVERLAY */
 .overlay{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.7);
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.75);
   display:none;
   align-items:center;
   justify-content:center;
   z-index:5;
 }
 
-/* CARD */
+/* CARD OPEN ANIMATION */
 .card{
   width:92%;
   max-width:460px;
   background:#fff8ef;
   border-radius:20px;
   padding:16px;
-  position:relative;
+  transform:scaleY(0);
+  transform-origin:top;
+  animation:openCard 1s ease forwards;
   box-shadow:0 10px 30px rgba(0,0,0,.25);
+  position:relative;
 }
 
-/* CLOSE */
+@keyframes openCard{
+  from{transform:scaleY(0)}
+  to{transform:scaleY(1)}
+}
+
 .close{
   position:absolute;
-  top:10px; right:14px;
+  top:10px;right:14px;
   font-size:22px;
   cursor:pointer;
 }
 
-/* CARD INNER */
 .card-inner{
   display:flex;
   gap:12px;
@@ -109,6 +106,27 @@ body{
   line-height:1.6;
   max-height:60vh;
   overflow-y:auto;
+}
+
+.video-link{
+  margin-top:14px;
+  color:#c0392b;
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+/* VIDEO */
+.video-overlay{
+  position:fixed;inset:0;
+  background:#000;
+  display:none;
+  z-index:10;
+}
+
+video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
 }
 </style>
 </head>
@@ -132,16 +150,22 @@ body{
         <img src="photo.jpg">
       </div>
       <div class="card-right">
-        <p><strong>🎄 Gửi em,</strong></p>
+        <p><strong>🎄 Phương Linh yêu dấu,</strong></p>
         <p>
-          Nội dung thư bạn tự viết ở đây.<br><br>
-          Không cần quá hoa mỹ,
-          chỉ cần là những điều thật lòng.
+          Anh chúc em 1 mùa giáng sinh vui vẻ bên bạn bè. Thật tiếc là mình không được đón giáng sinh cùng nhau nữa nhưng anh hy vọng món quà này sẽ khiến em cảm thấy sự hiện diện của anh bên cạnh em, em không cô đơn. Anh vẫn nhớ em viết trong bức thư tay đầu tiên gửi anh rằng mong sang năm lại được anh quàng khăn cho em, anh cảm ơn em đã giúp anh quàng khăn cho Phương Linh nhá, anh ở xa không làm được, đợi khi nào anh và em đoàn tụ thì anh sẽ quàng cho em (mặc dù có thể là mùa hè haha).<br><br>
+          Những điều giản dị nhưng thật lòng.
         </p>
-        <p>Giáng Sinh ấm áp ❤️</p>
+        <p class="video-link" id="openVideo">
+          Anh có vài lời muốn nhắn nhủ đến em nhân dịp Noel,  
+          ấn vào đây để xem nhé!
+        </p>
       </div>
     </div>
   </div>
+</div>
+
+<div class="video-overlay" id="videoBox">
+  <video src="video.mp4" controls autoplay></video>
 </div>
 
 <audio id="music" loop>
@@ -186,10 +210,8 @@ onpointermove=e=>{
   if(!drag)return;
   scarf.style.left=e.clientX-scarf.offsetWidth/2+"px";
   scarf.style.top=e.clientY-scarf.offsetHeight/2+"px";
-
   const s=scarf.getBoundingClientRect(),
         g=girl.getBoundingClientRect();
-
   if(s.top<g.top+g.height*.4){
     drag=false;
     scarf.style.display="none";
@@ -202,6 +224,16 @@ onpointermove=e=>{
 document.getElementById("close").onclick=()=>{
   overlay.style.display="none";
   scarf.style.display="block";
+};
+
+/* VIDEO */
+const videoBox=document.getElementById("videoBox");
+document.getElementById("openVideo").onclick=()=>{
+  videoBox.style.display="block";
+};
+videoBox.onclick=()=>{
+  videoBox.style.display="none";
+  videoBox.querySelector("video").pause();
 };
 </script>
 
