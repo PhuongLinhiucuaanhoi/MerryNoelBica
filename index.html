@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thiệp Giáng Sinh</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: url("bg.jpg") center/cover no-repeat;
+    font-family: "Times New Roman", serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* LỚP PHỦ TỐI */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+}
+
+/* NÚT MỞ */
+.open-btn {
+    position: relative;
+    z-index: 2;
+    background: #c0392b;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 18px;
+    text-align: center;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.4);
+}
+
+/* MẬT KHẨU */
+.password-box {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.password-inner {
+    background: white;
+    width: 85%;
+    max-width: 320px;
+    padding: 22px;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.password-inner input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.password-inner button {
+    margin-top: 14px;
+    padding: 12px;
+    width: 100%;
+    font-size: 16px;
+    background: #c0392b;
+    color: white;
+    border: none;
+    border-radius: 12px;
+}
+
+/* THIỆP */
+.card {
+    display: none;
+    position: relative;
+    z-index: 3;
+    background: #fffaf0;
+    width: 88%;
+    max-width: 340px;
+    padding: 26px 22px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+    animation: show 1s ease;
+}
+
+@keyframes show {
+    from {opacity: 0; transform: translateY(20px) scale(0.95);}
+    to {opacity: 1; transform: translateY(0) scale(1);}
+}
+
+.card h1 {
+    color: #b03a2e;
+    font-size: 22px;
+    margin-bottom: 14px;
+}
+
+.card p {
+    font-size: 16px;
+    line-height: 1.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<!-- NÚT MỞ -->
+<div class="open-btn" onclick="openPassword()">
+🎄 Mở thiệp Giáng Sinh 🎄
+</div>
+
+<!-- NHẬP MẬT KHẨU -->
+<div class="password-box" id="passwordBox">
+    <div class="password-inner">
+        <p>🔐 Nhập mật khẩu</p>
+        <input type="password" id="password" placeholder="Mật khẩu">
+        <button onclick="openCard()">Mở thiệp</button>
+    </div>
+</div>
+
+<!-- THIỆP -->
+<div class="card" id="card">
+    <h1>🎅 Merry Christmas 🎅</h1>
+    <p>
+        <!-- ✍️ BẠN GÕ NỘI DUNG Ở ĐÂY -->
+        Chúc em một mùa Giáng Sinh thật ấm áp,<br>
+        nhiều niềm vui và nụ cười ❤️<br><br>
+        Mong rằng dù ở đâu,<br>
+        em cũng luôn hạnh phúc 🎁
+    </p>
+</div>
+
+<!-- NHẠC -->
+<audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function openPassword() {
+    document.querySelector('.open-btn').style.display = "none";
+    document.getElementById("passwordBox").style.display = "flex";
+}
+
+function openCard() {
+    const correct = "noel2024";
+    const input = document.getElementById("password").value;
+
+    if (input === correct) {
+        document.getElementById("passwordBox").style.display = "none";
+        document.getElementById("card").style.display = "block";
+        document.getElementById("music").play();
+    } else {
+        alert("Sai mật khẩu rồi 🎄");
+    }
+}
+</script>
+
+</body>
+</html>
