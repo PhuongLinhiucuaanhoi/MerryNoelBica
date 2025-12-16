@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Christmas Letter</title>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  font-family: Georgia, serif;
+}
+
+/* BACKGROUND */
+.background {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+    url("background.jpg") center/cover no-repeat;
+  z-index: -3;
+}
+
+/* SNOW */
+#snow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+}
+
+/* MAIN */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.girl {
+  width: 70%;
+  max-width: 320px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+#scarf {
+  position: absolute;
+  width: 55%;
+  max-width: 240px;
+  bottom: 8%;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: none;
+  z-index: 2;
+}
+
+.hint {
+  position: absolute;
+  bottom: 3%;
+  color: #fff;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* LETTER */
+.letter {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.paper {
+  background: #fffdf7;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  padding: 22px;
+  border-radius: 14px;
+  overflow-y: auto;
+  font-size: 18px;
+  line-height: 1.6;
+  animation: fadeUp 0.7s ease;
+}
+
+@keyframes fadeUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+<canvas id="snow"></canvas>
+
+<div class="container">
+  <img src="girl.png" class="girl" id="girl" draggable="false">
+  <img src="scarf.png" id="scarf" draggable="false">
+  <div class="hint">Kéo khăn choàng lên cổ cô gái để mở thư</div>
+</div>
+
+<div class="letter" id="letter">
+  <div class="paper">
+    <h2>🎄 Gửi em,</h2>
+    <p>
+      Nội dung thư bạn tự viết ở đây.<br><br>
+      Chỉ cần là thật.
+    </p>
+    <p>
+      Giáng Sinh ấm áp nhé ❤️
+    </p>
+  </div>
+</div>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* ===== SNOW ===== */
+const canvas = document.getElementById("snow");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+let snowflakes = [];
+for (let i = 0; i < 120; i++) {
+  snowflakes.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 3 + 1,
+    s: Math.random() * 1 + 0.5
+  });
+}
+
+function drawSnow() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(255,255,255,0.85)";
+  ctx.beginPath();
+
+  for (const f of snowflakes) {
+    ctx.moveTo(f.x, f.y);
+    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+  }
+  ctx.fill();
+
+  for (const f of snowflakes) {
+    f.y += f.s;
+    if (f.y > canvas.height) {
+      f.y = 0;
+      f.x = Math.random() * canvas.width;
+    }
+  }
+
+  requestAnimationFrame(drawSnow);
+}
+drawSnow();
+
+/* ===== DRAG SCARF ===== */
+const scarf = document.getElementById("scarf");
+const girl = document.getElementById("girl");
+const letter = document.getElementById("letter");
+const music = document.getElementById("music");
+
+let dragging = false;
+
+scarf.addEventListener("pointerdown", e => {
+  dragging = true;
+  e.preventDefault();
+});
+
+window.addEventListener("pointerup", () => dragging = false);
+
+window.addEventListener("pointermove", e => {
+  if (!dragging) return;
+
+  scarf.style.left = e.clientX - scarf.offsetWidth / 2 + "px";
+  scarf.style.top = e.clientY - scarf.offsetHeight / 2 + "px";
+
+  const s = scarf.getBoundingClientRect();
+  const g = girl.getBoundingClientRect();
+
+  const neck = {
+    x: g.left + g.width * 0.25,
+    y: g.top + g.height * 0.25,
+    w: g.width * 0.5,
+    h: g.height * 0.18
+  };
+
+  if (
+    s.left < neck.x + neck.w &&
+    s.left + s.width > neck.x &&
+    s.top < neck.y + neck.h &&
+    s.top + s.height > neck.y
+  ) {
+    scarf.style.display = "none";
+    letter.style.display = "flex";
+    music.play();
+  }
+});
+</script>
+
+</body>
+</html>
