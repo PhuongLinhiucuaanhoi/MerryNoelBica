@@ -3,98 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Christmas Letter</title>
+<title>Christmas Card</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*{margin:0;padding:0;box-sizing:border-box}
 
-body {
-  height: 100vh;
-  overflow: hidden;
-  font-family: Georgia, serif;
+body{
+  height:100vh;
+  overflow:hidden;
+  font-family:'Baloo 2', cursive;
 }
 
 /* BACKGROUND */
-.background {
-  position: fixed;
-  inset: 0;
+.background{
+  position:fixed;
+  inset:0;
   background:
-    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
     url("background.jpg") center/cover no-repeat;
-  z-index: -3;
+  z-index:-3;
 }
 
 /* SNOW */
-#snow {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -2;
+#snow{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-2;
 }
 
 /* MAIN */
-.container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.container{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-.girl {
-  width: 70%;
-  max-width: 320px;
-  user-select: none;
-  -webkit-user-drag: none;
+.girl{width:70%;max-width:320px}
+#scarf{
+  position:absolute;
+  width:55%;
+  max-width:240px;
+  bottom:10%;
+  touch-action:none;
 }
 
-#scarf {
-  position: absolute;
-  width: 55%;
-  max-width: 240px;
-  bottom: 8%;
-  user-select: none;
-  -webkit-user-drag: none;
-  touch-action: none;
-  z-index: 2;
+.hint{
+  margin-top:14px;
+  color:#fff;
+  font-size:18px;
 }
 
-.hint {
-  position: absolute;
-  bottom: 3%;
-  color: #fff;
-  font-size: 14px;
-  opacity: 0.85;
+/* OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:5;
 }
 
-/* LETTER */
-.letter {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
+/* ENVELOPE */
+.envelope{
+  width:300px;
+  height:190px;
+  background:#c0392b;
+  border-radius:14px;
+  position:relative;
+  animation:zoomIn .8s ease forwards;
 }
 
-.paper {
-  background: #fffdf7;
-  width: 90%;
-  max-width: 400px;
-  max-height: 80vh;
-  padding: 22px;
-  border-radius: 14px;
-  overflow-y: auto;
-  font-size: 18px;
-  line-height: 1.6;
-  animation: fadeUp 0.7s ease;
+.envelope::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:#e74c3c;
+  clip-path:polygon(0 0,100% 0,50% 55%);
+  animation:flap 1.2s ease forwards;
+  transform-origin:top;
 }
 
-@keyframes fadeUp {
-  from { transform: translateY(40px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes flap{
+  0%{transform:rotateX(0)}
+  100%{transform:rotateX(160deg)}
+}
+
+@keyframes zoomIn{
+  from{transform:scale(.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* CARD */
+.card{
+  width:92%;
+  max-width:460px;
+  background:#fff8ef;
+  border-radius:20px;
+  padding:16px;
+  display:none;
+  animation:slideUp 1s ease forwards;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+@keyframes slideUp{
+  from{transform:translateY(60px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+
+.card-inner{
+  display:flex;
+  gap:12px;
+}
+
+/* LEFT IMAGE */
+.card-left{
+  width:50%;
+}
+.card-left img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:14px;
+}
+
+/* RIGHT TEXT */
+.card-right{
+  width:50%;
+  font-size:16px;
+  line-height:1.6;
+  overflow-y:auto;
+  max-height:60vh;
+}
+
+.card-right p{
+  opacity:0;
+  animation:textFade 1s ease forwards;
+}
+
+.card-right p:nth-child(1){animation-delay:.3s}
+.card-right p:nth-child(2){animation-delay:1s}
+.card-right p:nth-child(3){animation-delay:1.7s}
+
+@keyframes textFade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
@@ -105,115 +163,93 @@ body {
 <canvas id="snow"></canvas>
 
 <div class="container">
-  <img src="girl.png" class="girl" id="girl" draggable="false">
-  <img src="scarf.png" id="scarf" draggable="false">
-  <div class="hint">Kéo khăn choàng lên cổ cô gái để mở thư</div>
+  <img src="girl.png" class="girl" id="girl">
+  <img src="scarf.png" id="scarf">
+  <div class="hint">🧣 Quàng khăn cho cô ấy để mở thư</div>
 </div>
 
-<div class="letter" id="letter">
-  <div class="paper">
-    <h2>🎄 Gửi em,</h2>
-    <p>
-      Nội dung thư bạn tự viết ở đây.<br><br>
-      Chỉ cần là thật.
-    </p>
-    <p>
-      Giáng Sinh ấm áp nhé ❤️
-    </p>
+<div class="overlay" id="overlay">
+  <div class="envelope" id="env"></div>
+
+  <div class="card" id="card">
+    <div class="card-inner">
+      <div class="card-left">
+        <img src="photo.jpg">
+      </div>
+      <div class="card-right">
+        <h2>🎄 Gửi Bica</h2>
+        <p>
+          Lại thêm một mùa Giáng Sinh nữa nhưng lần này thì không được đón cùng nhau.<br><br>
+          Anh vẫn nhớ điều em thường mong là hàng năm anh sẽ vẫn quàng khăn cho em, lần này anh phải nhờ em quàng cho người yêu anh rồi. Chúc em 1 mùa Giáng Sinh ấm áp bên bạn bè, hưởng trọn vẹn 1 kỳ Noel như ngày lễ của người nước ngoài em nhé. <p>
+	</p> 
+	  I love you!
+        </p>
+        <p>
+          Giáng Sinh ấm áp và an lành ❤️
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 
 <audio id="music" loop>
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="music.mp3">
 </audio>
 
 <script>
-/* ===== SNOW ===== */
-const canvas = document.getElementById("snow");
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-let snowflakes = [];
-for (let i = 0; i < 120; i++) {
-  snowflakes.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 3 + 1,
-    s: Math.random() * 1 + 0.5
+/* SNOW */
+const c=document.getElementById("snow"),x=c.getContext("2d");
+function rs(){c.width=innerWidth;c.height=innerHeight}
+rs();onresize=rs;
+let s=Array.from({length:120},()=>({
+  x:Math.random()*c.width,
+  y:Math.random()*c.height,
+  r:Math.random()*3+1,
+  v:Math.random()+.5
+}));
+(function d(){
+  x.clearRect(0,0,c.width,c.height);
+  x.fillStyle="rgba(255,255,255,.9)";
+  x.beginPath();
+  s.forEach(f=>{
+    x.moveTo(f.x,f.y);
+    x.arc(f.x,f.y,f.r,0,Math.PI*2);
+    f.y+=f.v;
+    if(f.y>c.height){f.y=0;f.x=Math.random()*c.width}
   });
-}
+  x.fill();requestAnimationFrame(d);
+})();
 
-function drawSnow() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "rgba(255,255,255,0.85)";
-  ctx.beginPath();
+/* SCARF */
+const scarf=document.getElementById("scarf"),
+girl=document.getElementById("girl"),
+overlay=document.getElementById("overlay"),
+env=document.getElementById("env"),
+card=document.getElementById("card"),
+music=document.getElementById("music");
 
-  for (const f of snowflakes) {
-    ctx.moveTo(f.x, f.y);
-    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-  }
-  ctx.fill();
+let drag=false;
+scarf.onpointerdown=()=>drag=true;
+onpointerup=()=>drag=false;
 
-  for (const f of snowflakes) {
-    f.y += f.s;
-    if (f.y > canvas.height) {
-      f.y = 0;
-      f.x = Math.random() * canvas.width;
-    }
-  }
+onpointermove=e=>{
+  if(!drag)return;
+  scarf.style.left=e.clientX-scarf.offsetWidth/2+"px";
+  scarf.style.top=e.clientY-scarf.offsetHeight/2+"px";
 
-  requestAnimationFrame(drawSnow);
-}
-drawSnow();
+  const s=scarf.getBoundingClientRect(),
+        g=girl.getBoundingClientRect();
 
-/* ===== DRAG SCARF ===== */
-const scarf = document.getElementById("scarf");
-const girl = document.getElementById("girl");
-const letter = document.getElementById("letter");
-const music = document.getElementById("music");
-
-let dragging = false;
-
-scarf.addEventListener("pointerdown", e => {
-  dragging = true;
-  e.preventDefault();
-});
-
-window.addEventListener("pointerup", () => dragging = false);
-
-window.addEventListener("pointermove", e => {
-  if (!dragging) return;
-
-  scarf.style.left = e.clientX - scarf.offsetWidth / 2 + "px";
-  scarf.style.top = e.clientY - scarf.offsetHeight / 2 + "px";
-
-  const s = scarf.getBoundingClientRect();
-  const g = girl.getBoundingClientRect();
-
-  const neck = {
-    x: g.left + g.width * 0.25,
-    y: g.top + g.height * 0.25,
-    w: g.width * 0.5,
-    h: g.height * 0.18
-  };
-
-  if (
-    s.left < neck.x + neck.w &&
-    s.left + s.width > neck.x &&
-    s.top < neck.y + neck.h &&
-    s.top + s.height > neck.y
-  ) {
-    scarf.style.display = "none";
-    letter.style.display = "flex";
+  if(s.top<g.top+g.height*.4){
+    scarf.style.display="none";
+    overlay.style.display="flex";
     music.play();
+    setTimeout(()=>{
+      env.style.display="none";
+      card.style.display="block";
+    },1600);
   }
-});
+};
 </script>
 
 </body>
