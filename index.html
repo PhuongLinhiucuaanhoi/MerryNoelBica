@@ -37,21 +37,26 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
+  padding-top:40px; /* ĐẨY CAO TOÀN BỘ */
 }
 
 .hint{
   color:#fff;
   font-size:18px;
-  margin-bottom:12px;
+  margin-bottom:20px;
 }
 
-.girl{width:70%;max-width:320px}
+.girl{
+  width:70%;
+  max-width:320px;
+  margin-bottom:60px; /* CHỪA CHỖ CHO KHĂN */
+}
+
 #scarf{
   position:absolute;
   width:55%;
   max-width:240px;
-  bottom:10%;
+  bottom:12%;
   touch-action:none;
 }
 
@@ -72,14 +77,8 @@ body{
   background:#fff8ef;
   border-radius:20px;
   padding:16px;
-  display:none;
-  animation:fadeUp 1s ease forwards;
   position:relative;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(50px)}
-  to{opacity:1;transform:translateY(0)}
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
 /* CLOSE */
@@ -111,22 +110,6 @@ body{
   max-height:60vh;
   overflow-y:auto;
 }
-
-/* VIDEO */
-.video-overlay{
-  position:fixed; inset:0;
-  background:black;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:10;
-}
-
-video{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
 </style>
 </head>
 
@@ -142,20 +125,23 @@ video{
 </div>
 
 <div class="overlay" id="overlay">
-  <div class="card" id="card">
+  <div class="card">
     <div class="close" id="close">✕</div>
     <div class="card-inner">
       <div class="card-left">
         <img src="photo.jpg">
       </div>
-      <div class="card-right" id="text"></div>
+      <div class="card-right">
+        <p><strong>🎄 Gửi em,</strong></p>
+        <p>
+          Nội dung thư bạn tự viết ở đây.<br><br>
+          Không cần quá hoa mỹ,
+          chỉ cần là những điều thật lòng.
+        </p>
+        <p>Giáng Sinh ấm áp ❤️</p>
+      </div>
     </div>
   </div>
-</div>
-
-<div class="video-overlay" id="videoBox">
-  <div class="close" id="closeVideo">✕</div>
-  <video src="video.mp4" controls playsinline></video>
 </div>
 
 <audio id="music" loop>
@@ -186,31 +172,10 @@ let s=Array.from({length:100},()=>({
   x.fill();requestAnimationFrame(d);
 })();
 
-/* TYPEWRITER */
-const content = `
-🎄 Gửi em,<br><br>
-Anh có vài lời muốn nhắn nhủ đến em nhân dịp Noel,
-chỉ mong khi đọc những dòng này,
-em sẽ mỉm cười thật khẽ.<br><br>
-<span id="openVideo" style="color:#c0392b;cursor:pointer;text-decoration:underline">
-Anh có vài lời muốn nhắn nhủ đến em nhân dịp noel, ấn vào đây để xem nhé!
-</span>
-`;
-
-const textBox=document.getElementById("text");
-let i=0;
-function type(){
-  if(i<content.length){
-    textBox.innerHTML+=content.charAt(i++);
-    requestAnimationFrame(type);
-  }
-}
-
 /* SCARF */
 const scarf=document.getElementById("scarf"),
 girl=document.getElementById("girl"),
 overlay=document.getElementById("overlay"),
-card=document.getElementById("card"),
 music=document.getElementById("music");
 
 let drag=false;
@@ -229,32 +194,14 @@ onpointermove=e=>{
     drag=false;
     scarf.style.display="none";
     overlay.style.display="flex";
-    card.style.display="block";
     music.play();
-    textBox.innerHTML="";
-    i=0; type();
   }
 };
 
 /* CLOSE */
 document.getElementById("close").onclick=()=>{
   overlay.style.display="none";
-  card.style.display="none";
   scarf.style.display="block";
-};
-
-/* VIDEO */
-document.addEventListener("click",e=>{
-  if(e.target.id==="openVideo"){
-    document.getElementById("videoBox").style.display="flex";
-    document.querySelector("video").play();
-  }
-});
-
-document.getElementById("closeVideo").onclick=()=>{
-  const v=document.querySelector("video");
-  v.pause(); v.currentTime=0;
-  document.getElementById("videoBox").style.display="none";
 };
 </script>
 
