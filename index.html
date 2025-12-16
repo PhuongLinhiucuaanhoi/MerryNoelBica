@@ -13,7 +13,7 @@ body{height:100vh;overflow:hidden;font-family:'Baloo 2',cursive}
 
 /* BACKGROUND */
 .background{
-  position:fixed;inset:0;
+  position:fixed; inset:0;
   background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
   url("background.jpg") center/cover no-repeat;
   z-index:-3;
@@ -53,7 +53,7 @@ body{height:100vh;overflow:hidden;font-family:'Baloo 2',cursive}
 
 /* OVERLAY */
 .overlay{
-  position:fixed;inset:0;
+  position:fixed; inset:0;
   background:rgba(0,0,0,.75);
   display:none;
   align-items:center;
@@ -61,73 +61,77 @@ body{height:100vh;overflow:hidden;font-family:'Baloo 2',cursive}
   z-index:5;
 }
 
-/* CARD OPEN ANIMATION */
-.card{
+/* PHONG BÌ */
+.envelope{
   width:92%;
   max-width:460px;
-  background:#fff8ef;
-  border-radius:20px;
-  padding:16px;
-  transform:scaleY(0);
-  transform-origin:top;
-  animation:openCard 1s ease forwards;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  height:260px;
+  background:#f0d8b3;
+  border-radius:12px;
   position:relative;
+  transform:rotateX(90deg);
+  transform-origin:top;
+  transition: transform 0.8s ease;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
-@keyframes openCard{
-  from{transform:scaleY(0)}
-  to{transform:scaleY(1)}
-}
-
-.close{
+/* NẮP PHONG BÌ */
+.envelope::before{
+  content:'';
   position:absolute;
-  top:10px;right:14px;
-  font-size:22px;
-  cursor:pointer;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:#e6b97c;
+  clip-path: polygon(0 0, 50% 40%, 100% 0, 100% 100%, 0 100%);
+  transition: transform 0.8s ease;
+  transform-origin:top;
 }
 
-.card-inner{
+/* THIỆP BÊN TRONG */
+.card{
+  width:100%;
+  height:100%;
+  background:#fff8ef;
+  border-radius:12px;
+  padding:16px;
+  position:absolute;
+  top:0; left:0;
   display:flex;
   gap:12px;
+  opacity:0;
+  transition:opacity 1s ease;
+  overflow:hidden;
 }
 
 .card-left,.card-right{width:50%}
+.card-left img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+.card-right{font-size:16px;line-height:1.6;overflow-y:auto}
 
-.card-left img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:14px;
+/* CLOSE BUTTON */
+.close{
+  position:absolute;
+  top:10px; right:14px;
+  font-size:22px;
+  cursor:pointer;
+  z-index:10;
 }
 
-.card-right{
-  font-size:16px;
-  line-height:1.6;
-  max-height:60vh;
-  overflow-y:auto;
-}
-
+/* VIDEO LINK */
 .video-link{
-  margin-top:14px;
+  margin-top:12px;
   color:#c0392b;
   text-decoration:underline;
   cursor:pointer;
 }
 
-/* VIDEO */
+/* VIDEO OVERLAY */
 .video-overlay{
   position:fixed;inset:0;
-  background:#000;
+  background:black;
   display:none;
   z-index:10;
 }
-
-video{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
+video{width:100%;height:100%;object-fit:contain}
 </style>
 </head>
 
@@ -142,22 +146,19 @@ video{
   <img src="scarf.png" id="scarf">
 </div>
 
+<!-- OVERLAY PHONG BÌ + THIỆP -->
 <div class="overlay" id="overlay">
-  <div class="card">
-    <div class="close" id="close">✕</div>
-    <div class="card-inner">
+  <div class="envelope" id="envelope">
+    <div class="card" id="card">
+      <div class="close" id="close">✕</div>
       <div class="card-left">
         <img src="photo.jpg">
       </div>
       <div class="card-right">
-        <p><strong>🎄 Phương Linh yêu dấu,</strong></p>
-        <p>
-          Anh chúc em 1 mùa giáng sinh vui vẻ bên bạn bè. Thật tiếc là mình không được đón giáng sinh cùng nhau nữa nhưng anh hy vọng món quà này sẽ khiến em cảm thấy sự hiện diện của anh bên cạnh em, em không cô đơn. Anh vẫn nhớ em viết trong bức thư tay đầu tiên gửi anh rằng mong sang năm lại được anh quàng khăn cho em, anh cảm ơn em đã giúp anh quàng khăn cho Phương Linh nhá, anh ở xa không làm được, đợi khi nào anh và em đoàn tụ thì anh sẽ quàng cho em (mặc dù có thể là mùa hè haha).<br><br>
-          Những điều giản dị nhưng thật lòng.
-        </p>
+        <p><strong>🎄 Gửi em,</strong></p>
+        <p>Anh chúc em 1 mùa giáng sinh vui vẻ bên bạn bè. Thật tiếc là mình không được đón giáng sinh cùng nhau nữa nhưng anh hy vọng món quà này sẽ khiến em cảm thấy sự hiện diện của anh bên cạnh em, em không cô đơn. Anh vẫn nhớ em viết trong bức thư tay đầu tiên gửi anh rằng mong sang năm lại được anh quàng khăn cho em, anh cảm ơn em đã giúp anh quàng khăn cho Phương Linh nhá, anh ở xa không làm được, đợi khi nào anh và em đoàn tụ thì anh sẽ quàng cho em (mặc dù có thể là mùa hè haha)<br><br>Những điều giản dị nhưng thật lòng.</p>
         <p class="video-link" id="openVideo">
-          Anh có vài lời muốn nhắn nhủ đến em nhân dịp Noel,  
-          ấn vào đây để xem nhé!
+          Anh có vài lời muốn nhắn nhủ đến em nhân dịp Noel, ấn vào đây để xem nhé!
         </p>
       </div>
     </div>
@@ -200,6 +201,8 @@ let s=Array.from({length:100},()=>({
 const scarf=document.getElementById("scarf"),
 girl=document.getElementById("girl"),
 overlay=document.getElementById("overlay"),
+envelope=document.getElementById("envelope"),
+card=document.getElementById("card"),
 music=document.getElementById("music");
 
 let drag=false;
@@ -217,6 +220,9 @@ onpointermove=e=>{
     scarf.style.display="none";
     overlay.style.display="flex";
     music.play();
+    // MỞ PHONG BÌ
+    envelope.style.transform="rotateX(0deg)";
+    setTimeout(()=>{card.style.opacity=1},800);
   }
 };
 
@@ -224,6 +230,8 @@ onpointermove=e=>{
 document.getElementById("close").onclick=()=>{
   overlay.style.display="none";
   scarf.style.display="block";
+  envelope.style.transform="rotateX(90deg)";
+  card.style.opacity=0;
 };
 
 /* VIDEO */
