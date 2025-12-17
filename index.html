@@ -4,149 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Christmas Letter</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600&display=swap" rel="stylesheet">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{height:100vh;overflow:hidden;font-family:'Baloo 2',cursive}
-
-/* BACKGROUND */
-.background{
-  position:fixed; inset:0;
-  background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-  url("background.jpg") center/cover no-repeat;
-  z-index:-3;
-}
-
-/* SNOW */
+.background{position:fixed;inset:0;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url("background.jpg") center/cover no-repeat;z-index:-3}
 #snow{position:fixed;inset:0;pointer-events:none;z-index:-2}
-
-/* MAIN */
-.container{
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding-top:40px;
-}
-
-.hint{
-  color:#fff;
-  font-size:20px;
-  margin-bottom:16px;
-}
-
-.girl{
-  width:70%;
-  max-width:320px;
-  margin-bottom:70px;
-}
-
-#scarf{
-  position:absolute;
-  width:55%;
-  max-width:240px;
-  bottom:12%;
-  touch-action:none;
-}
-
-/* OVERLAY */
-.overlay{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.75);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:5;
-}
-
-/* PHONG BÌ */
-.envelope{
-  width:92%;
-  max-width:460px;
-  height:260px;
-  background:#f0d8b3;
-  border-radius:12px;
-  position:relative;
-  transform:rotateX(90deg);
-  transform-origin:top;
-  transition: transform 0.8s ease;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-}
-
-/* NẮP PHONG BÌ */
-.envelope::before{
-  content:'';
-  position:absolute;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:#e6b97c;
-  clip-path: polygon(0 0, 50% 40%, 100% 0, 100% 100%, 0 100%);
-  transition: transform 0.8s ease;
-  transform-origin:top;
-}
-
-/* THIỆP BÊN TRONG */
-.card{
-  width:100%;
-  height:100%;
-  background:#fff8ef;
-  border-radius:12px;
-  padding:16px;
-  position:absolute;
-  top:0; left:0;
-  display:flex;
-  gap:12px;
-  opacity:0;
-  transition:opacity 1s ease;
-  overflow:hidden;
-}
-
+.container{height:100%;display:flex;flex-direction:column;align-items:center;padding-top:40px}
+.hint{color:#fff;font-size:20px;margin-bottom:16px}
+.girl{width:70%;max-width:320px;margin-bottom:70px;position:relative}
+#scarf{position:absolute;width:55%;max-width:240px;bottom:12%;touch-action:none}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:5}
+.envelope{width:92%;max-width:460px;height:260px;background:#f0d8b3;border-radius:12px;position:relative;transform:rotateX(90deg);transform-origin:top;transition: transform 1.2s ease;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.envelope::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:#e6b97c;clip-path: polygon(0 0, 50% 40%, 100% 0, 100% 100%, 0 100%);transition: transform 1.2s ease;transform-origin:top}
+.card{width:100%;height:100%;background:#fff8ef;border-radius:12px;padding:16px;position:absolute;top:0;left:0;display:flex;gap:12px;opacity:0;transform: scaleX(0);transform-origin:center;transition: opacity 0.8s ease, transform 1s ease;overflow:hidden}
 .card-left,.card-right{width:50%}
 .card-left img{width:100%;height:100%;object-fit:cover;border-radius:10px}
 .card-right{font-size:16px;line-height:1.6;overflow-y:auto}
-
-/* CLOSE BUTTON */
-.close{
-  position:absolute;
-  top:10px; right:14px;
-  font-size:22px;
-  cursor:pointer;
-  z-index:10;
-}
-
-/* VIDEO LINK */
-.video-link{
-  margin-top:12px;
-  color:#c0392b;
-  text-decoration:underline;
-  cursor:pointer;
-}
-
-/* VIDEO OVERLAY */
-.video-overlay{
-  position:fixed;inset:0;
-  background:black;
-  display:none;
-  z-index:10;
-}
+.close{position:absolute;top:10px;right:14px;font-size:22px;cursor:pointer;z-index:10}
+.video-link{margin-top:12px;color:#c0392b;text-decoration:underline;cursor:pointer}
+.video-overlay{position:fixed;inset:0;background:black;display:none;z-index:10}
 video{width:100%;height:100%;object-fit:contain}
+.password-box{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.25);display:none;z-index:15;text-align:center}
+.password-box input{width:80%;padding:8px;margin-top:12px;font-size:16px}
+.password-box button{margin-top:10px;padding:6px 14px;font-size:16px;cursor:pointer}
+.password-box .hint{margin-top:8px;font-size:12px;color:#555}
 </style>
 </head>
 
 <body>
-
 <div class="background"></div>
 <canvas id="snow"></canvas>
 
 <div class="container">
-  <div class="hint">🧣 Quàng khăn cho cô ấy để mở thư</div>
+  <div class="hint">🧣 Quàng khăn cho Bica để mở thư</div>
   <img src="girl.png" class="girl" id="girl">
   <img src="scarf.png" id="scarf">
 </div>
 
-<!-- OVERLAY PHONG BÌ + THIỆP -->
 <div class="overlay" id="overlay">
   <div class="envelope" id="envelope">
     <div class="card" id="card">
@@ -155,8 +50,8 @@ video{width:100%;height:100%;object-fit:contain}
         <img src="photo.jpg">
       </div>
       <div class="card-right">
-        <p><strong>🎄 Gửi em,</strong></p>
-        <p>Anh chúc em 1 mùa giáng sinh vui vẻ bên bạn bè. Thật tiếc là mình không được đón giáng sinh cùng nhau nữa nhưng anh hy vọng món quà này sẽ khiến em cảm thấy sự hiện diện của anh bên cạnh em, em không cô đơn. Anh vẫn nhớ em viết trong bức thư tay đầu tiên gửi anh rằng mong sang năm lại được anh quàng khăn cho em, anh cảm ơn em đã giúp anh quàng khăn cho Phương Linh nhá, anh ở xa không làm được, đợi khi nào anh và em đoàn tụ thì anh sẽ quàng cho em (mặc dù có thể là mùa hè haha)<br><br>Những điều giản dị nhưng thật lòng.</p>
+        <p><strong>🎄 Phương Linh yêu dấu,</strong></p>
+        <p>Anh chúc em 1 mùa giáng sinh vui vẻ. Thật tiếc là mình không được đón giáng sinh cùng nhau nữa nhưng anh hy vọng món quà này sẽ khiến em cảm thấy sự hiện diện của anh bên cạnh em, em không cô đơn. Anh vẫn nhớ em viết trong bức thư tay đầu tiên gửi anh rằng mong sang năm lại được anh quàng khăn cho em, anh ở xa không làm được nên cảm ơn em đã giúp anh quàng khăn cho Phương Linh nhá, đợi khi nào anh và em đoàn tụ thì anh sẽ quàng cho em (mặc dù có thể là mùa hè haha)<br><br>Hihi bất ngờ chưa nè.</p>
         <p class="video-link" id="openVideo">
           Anh có vài lời muốn nhắn nhủ đến em nhân dịp Noel, ấn vào đây để xem nhé!
         </p>
@@ -165,65 +60,57 @@ video{width:100%;height:100%;object-fit:contain}
   </div>
 </div>
 
-<div class="video-overlay" id="videoBox">
-  <video src="video.mp4" controls autoplay></video>
+<div class="password-box" id="passwordBox">
+  <div>Nhập mật khẩu để mở thư:</div>
+  <input type="password" id="passwordInput" placeholder="Nhập mật khẩu">
+  <br>
+  <button id="passwordBtn">Mở thư</button>
+  <div class="hint">Gợi ý: Ngày tháng năm lần đầu bạn gặp người yêu bạn, ví dụ: 27112023</div>
 </div>
 
-<audio id="music" loop>
-  <source src="music.mp3">
-</audio>
+<div class="video-overlay" id="videoBox">
+  <video id="videoPlayer" controls autoplay></video>
+</div>
 
 <script>
 /* SNOW */
 const c=document.getElementById("snow"),x=c.getContext("2d");
 function rs(){c.width=innerWidth;c.height=innerHeight}
 rs();onresize=rs;
-let s=Array.from({length:100},()=>({
-  x:Math.random()*c.width,
-  y:Math.random()*c.height,
-  r:Math.random()*3+1,
-  v:Math.random()+.5
-}));
-(function d(){
-  x.clearRect(0,0,c.width,c.height);
-  x.fillStyle="rgba(255,255,255,.9)";
-  x.beginPath();
-  s.forEach(f=>{
-    x.moveTo(f.x,f.y);
-    x.arc(f.x,f.y,f.r,0,Math.PI*2);
-    f.y+=f.v;
-    if(f.y>c.height){f.y=0;f.x=Math.random()*c.width}
-  });
-  x.fill();requestAnimationFrame(d);
-})();
+let s=Array.from({length:100},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*3+1,v:Math.random()+.5}));
+(function d(){x.clearRect(0,0,c.width,c.height);x.fillStyle="rgba(255,255,255,.9)";x.beginPath();s.forEach(f=>{x.moveTo(f.x,f.y);x.arc(f.x,f.y,f.r,0,Math.PI*2);f.y+=f.v;if(f.y>c.height){f.y=0;f.x=Math.random()*c.width}});x.fill();requestAnimationFrame(d)})();
 
-/* SCARF */
+/* SCARF DRAG */
 const scarf=document.getElementById("scarf"),
 girl=document.getElementById("girl"),
 overlay=document.getElementById("overlay"),
 envelope=document.getElementById("envelope"),
 card=document.getElementById("card"),
-music=document.getElementById("music");
+passwordBox=document.getElementById("passwordBox"),
+passwordInput=document.getElementById("passwordInput"),
+passwordBtn=document.getElementById("passwordBtn"),
+videoBox=document.getElementById("videoBox"),
+videoPlayer=document.getElementById("videoPlayer");
 
 let drag=false;
 scarf.onpointerdown=()=>drag=true;
 onpointerup=()=>drag=false;
-
 onpointermove=e=>{
-  if(!drag)return;
+  if(!drag) return;
   scarf.style.left=e.clientX-scarf.offsetWidth/2+"px";
   scarf.style.top=e.clientY-scarf.offsetHeight/2+"px";
-  const s=scarf.getBoundingClientRect(),
-        g=girl.getBoundingClientRect();
-  if(s.top<g.top+g.height*.4){
-    drag=false;
-    scarf.style.display="none";
+  const s=scarf.getBoundingClientRect(),g=girl.getBoundingClientRect();
+  if(s.top<g.top+g.height/3){drag=false;passwordBox.style.display="block"}
+};
+
+/* PASSWORD CHECK */
+passwordBtn.onclick=()=>{
+  if(passwordInput.value==="26112023"){
+    passwordBox.style.display="none";
     overlay.style.display="flex";
-    music.play();
-    // MỞ PHONG BÌ
     envelope.style.transform="rotateX(0deg)";
-    setTimeout(()=>{card.style.opacity=1},800);
-  }
+    setTimeout(()=>{card.style.opacity=1;card.style.transform="scaleX(1)";playBackgroundVideo()},1200);
+  }else{alert("Sai mật khẩu, thử lại nhé!");passwordInput.value=""}
 };
 
 /* CLOSE */
@@ -232,18 +119,48 @@ document.getElementById("close").onclick=()=>{
   scarf.style.display="block";
   envelope.style.transform="rotateX(90deg)";
   card.style.opacity=0;
+  card.style.transform="scaleX(0)";
 };
 
-/* VIDEO */
-const videoBox=document.getElementById("videoBox");
-document.getElementById("openVideo").onclick=()=>{
+/* VIDEO LIST */
+const videos=[
+  "https://drive.google.com/uc?export=download&id=1Cq8_A5U_SYdduSCxXfhsGaP66JT-q-B2",
+  "https://drive.google.com/uc?export=download&id=18ArbyXiUgV7bOEtawBoaE1-c0MleLp5M",
+  "https://drive.google.com/uc?export=download&id=1LPv_7uDEkBCv_koLdnyUYEmPBYv_x3eM"
+];
+let currentVideo=0;
+
+document.getElementById("openVideo").onclick = () => {
+  currentVideo=0;
+  videoPlayer.src=videos[currentVideo];
   videoBox.style.display="block";
+  videoPlayer.play();
 };
+
+videoPlayer.onended=()=>{
+  currentVideo++;
+  if(currentVideo<videos.length){
+    videoPlayer.src=videos[currentVideo];
+    videoPlayer.play();
+  }else{
+    videoBox.style.display="none";
+  }
+};
+
 videoBox.onclick=()=>{
   videoBox.style.display="none";
-  videoBox.querySelector("video").pause();
+  videoPlayer.pause();
 };
-</script>
 
+/* BACKGROUND VIDEO (MUSIC) */
+function playBackgroundVideo(){
+  currentVideo=1; // navidad_music.mp4
+  videoPlayer.src=videos[currentVideo];
+  videoBox.style.display="block";
+  videoPlayer.play();
+  videoPlayer.onended=()=>{videoBox.style.display="none";}
+  videoBox.onclick=()=>{videoBox.style.display="none";videoPlayer.pause();}
+}
+</script>
 </body>
 </html>
