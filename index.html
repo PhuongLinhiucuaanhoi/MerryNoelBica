@@ -51,7 +51,7 @@ video{width:100%;height:100%;object-fit:contain}
       </div>
       <div class="card-right">
         <p><strong>🎄 Phương Linh ơi,</strong></p>
-        <p>NAnh chúc em 1 mùa giáng sinh vui vẻ. Thật tiếc là mình không được đón giáng sinh cùng nhau nữa nhưng anh hy vọng món quà này sẽ khiến em cảm thấy sự hiện diện của anh bên cạnh em, em không cô đơn. Anh vẫn nhớ em viết trong bức thư tay đầu tiên gửi anh rằng mong sang năm lại được anh quàng khăn cho em, anh ở xa không làm được nên cảm ơn em đã giúp anh quàng khăn cho Phương Linh nhá, đợi khi nào anh và em đoàn tụ thì anh sẽ quàng cho em (mặc dù có thể là mùa hè haha)<br><br>Hihi bất ngờ chưa nè.</p>
+        <p>Anh chúc em 1 mùa giáng sinh vui vẻ. Thật tiếc là mình không được đón giáng sinh cùng nhau nữa nhưng anh hy vọng món quà này sẽ khiến em cảm thấy sự hiện diện của anh bên cạnh em, em không cô đơn. Anh vẫn nhớ em viết trong bức thư tay đầu tiên gửi anh rằng mong sang năm lại được anh quàng khăn cho em, anh ở xa không làm được nên cảm ơn em đã giúp anh quàng khăn cho Phương Linh nhá, đợi khi nào anh và em đoàn tụ thì anh sẽ quàng cho em (mặc dù có thể là mùa hè haha)<br><br>Hihi bất ngờ chưa nè.</p>
         <p class="video-link" id="openVideo">
           Anh có vài lời muốn nhắn nhủ đến em nhân dịp Noel, ấn vào đây để xem nhé!
         </p>
@@ -72,8 +72,9 @@ video{width:100%;height:100%;object-fit:contain}
   <video id="videoPlayer" controls></video>
 </div>
 
+<!-- NHẠC NỀN MP3 -->
 <audio id="bgMusic" loop>
-  <source src="https://drive.google.com/uc?export=download&id=18ArbyXiUgV7bOEtawBoaE1-c0MleLp5M" type="video/mp4">
+  <source src="feliz_navidad.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -117,7 +118,7 @@ passwordBtn.onclick=()=>{
     setTimeout(()=>{
       card.style.opacity=1;
       card.style.transform="scaleX(1)";
-      bgMusic.play(); // phát nhạc nền
+      bgMusic.play(); // phát nhạc nền MP3
     },1200);
   }else{alert("Sai mật khẩu, thử lại nhé!");passwordInput.value=""}
 };
@@ -133,8 +134,8 @@ document.getElementById("close").onclick=()=>{
 
 /* VIDEO LIST */
 const videos=[
-  "https://drive.google.com/uc?export=download&id=1Cq8_A5U_SYdduSCxXfhsGaP66JT-q-B2",
-  "https://drive.google.com/uc?export=download&id=1LPv_7uDEkBCv_koLdnyUYEmPBYv_x3eM"
+  "https://drive.google.com/uc?export=download&id=1Cq8_A5U_SYdduSCxXfhsGaP66JT-q-B2", // video đầu
+  "https://drive.google.com/uc?export=download&id=1LPv_7uDEkBCv_koLdnyUYEmPBYv_x3eM"  // After Edit
 ];
 let currentVideo=0;
 
