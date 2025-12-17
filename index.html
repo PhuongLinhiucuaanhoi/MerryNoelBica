@@ -4,37 +4,186 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Thiệp Noel</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{height:100vh;overflow:hidden;font-family:'Baloo 2',cursive}
-.background{position:fixed;inset:0;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url("background.jpg") center/cover no-repeat;z-index:-3}
-#snow{position:fixed;inset:0;pointer-events:none;z-index:-2}
-.container{height:100%;display:flex;flex-direction:column;align-items:center;padding-top:40px}
-.hint{color:#fff;font-size:20px;margin-bottom:16px}
-.girl{width:70%;max-width:320px;margin-bottom:70px;position:relative}
-#scarf{position:absolute;width:55%;max-width:240px;bottom:12%;touch-action:none}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:5}
-.envelope{width:92%;max-width:460px;height:260px;background:#f0d8b3;border-radius:12px;position:relative;transform:rotateX(90deg);transform-origin:top;transition: transform 1.2s ease;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-.card{width:100%;height:100%;background:#fff8ef;border-radius:12px;padding:16px;position:absolute;top:0;left:0;display:flex;gap:12px;opacity:0;transform: scaleX(0);transform-origin:center;transition: opacity 0.8s ease, transform 1s ease;overflow:hidden}
+
+/* nền */
+.background{
+  position:fixed;inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("background.jpg") center/cover no-repeat;
+  z-index:-3;
+}
+
+/* tuyết */
+#snow{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:-2;
+}
+
+/* bố cục chính */
+.container{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding-top:40px;
+}
+
+.hint{
+  color:#fff;
+  font-size:20px;
+  margin-bottom:16px;
+}
+
+.girl{
+  width:70%;
+  max-width:320px;
+  margin-bottom:70px;
+  position:relative;
+}
+
+#scarf{
+  position:absolute;
+  width:55%;
+  max-width:240px;
+  bottom:12%;
+  touch-action:none;
+}
+
+/* overlay thiệp */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:5;
+}
+
+.envelope{
+  width:92%;
+  max-width:460px;
+  height:260px;
+  background:#f0d8b3;
+  border-radius:12px;
+  position:relative;
+  transform:rotateX(90deg);
+  transform-origin:top;
+  transition:transform 1.2s ease;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.envelope::before{
+  content:'';
+  position:absolute;top:0;left:0;
+  width:100%;height:100%;
+  background:#e6b97c;
+  clip-path: polygon(0 0,50% 40%,100% 0,100% 100%,0 100%);
+  transition:transform 1.2s ease;
+  transform-origin:top;
+}
+
+/* card */
+.card{
+  width:100%;height:100%;
+  background:#fff8ef;
+  border-radius:12px;
+  padding:16px;
+  position:absolute;
+  top:0;left:0;
+  display:flex;gap:12px;
+  opacity:0;
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:opacity .8s ease,transform 1s ease;
+  overflow:hidden;
+}
+
 .card-left,.card-right{width:50%}
-.card-left img{width:100%;height:100%;object-fit:cover;border-radius:10px}
-.card-right{font-size:16px;line-height:1.6;overflow-y:auto;color:#333}
-.close{position:absolute;top:10px;right:14px;font-size:22px;cursor:pointer;z-index:10}
-.video-link{margin-top:12px;color:#c0392b;text-decoration:underline;cursor:pointer}
-.password-box{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.25);display:none;z-index:15;text-align:center}
-.password-box input{width:80%;padding:8px;margin-top:12px;font-size:16px}
-.password-box button{margin-top:10px;padding:6px 14px;font-size:16px;cursor:pointer}
-.password-box .hint{margin-top:8px;font-size:12px;color:#555}
+
+.card-left img{
+  width:100%;height:100%;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.card-right{
+  font-size:16px;
+  line-height:1.6;
+  overflow-y:auto;
+  color:#333;
+}
+
+.close{
+  position:absolute;
+  top:10px;right:14px;
+  font-size:22px;
+  cursor:pointer;
+  z-index:10;
+}
+
+/* link Drive */
+.drive-link{
+  color:#c0392b;
+  text-decoration:underline;
+  cursor:pointer;
+  margin-top:14px;
+  display:block;
+  font-weight:600;
+  font-size:17px;
+}
+
+/* box nhập mật khẩu */
+.password-box{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  display:none;
+  z-index:15;
+  text-align:center;
+}
+
+.password-box input{
+  width:80%;
+  padding:8px;
+  margin-top:12px;
+  font-size:16px;
+}
+
+.password-box button{
+  margin-top:10px;
+  padding:6px 14px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.password-box .hint{
+  margin-top:8px;
+  font-size:12px;
+  color:#555;
+}
 </style>
 </head>
 
 <body>
+
 <div class="background"></div>
 <canvas id="snow"></canvas>
 
 <div class="container">
-  <div class="hint">🧣 Quàng khăn cho cô ấy để mở thư</div>
+  <div class="hint">🧣 Quàng khăn cho Bica để mở thư</div>
   <img src="girl.png" class="girl" id="girl">
   <img src="scarf.png" id="scarf">
 </div>
@@ -49,9 +198,9 @@ body{height:100vh;overflow:hidden;font-family:'Baloo 2',cursive}
       <div class="card-right">
         <p><strong>🎄 Phương Linh ơi,</strong></p>
         <p>Anh chúc em 1 mùa giáng sinh vui vẻ. Thật tiếc là mình không được đón giáng sinh cùng nhau nữa nhưng anh hy vọng món quà này sẽ khiến em cảm thấy sự hiện diện của anh bên cạnh em, em không cô đơn. Anh vẫn nhớ em viết trong bức thư tay đầu tiên gửi anh rằng mong sang năm lại được anh quàng khăn cho em, anh ở xa không làm được nên cảm ơn em đã giúp anh quàng khăn cho Phương Linh nhá, đợi khi nào anh và em đoàn tụ thì anh sẽ quàng cho em (mặc dù có thể là mùa hè haha)<br><br>Hihi bất ngờ chưa nè.</p>
-        <p class="video-link">
-          Anh có vài lời muốn nhắn nhủ đến em nhân dịp Noel, <a href="https://drive.google.com/file/d/https://drive.google.com/drive/folders/1qbc5qwMcM10c6YOjy9t6Y5DptBbWC5q7?usp=drive_link/view?usp=sharing" target="_blank">ấn vào đây để xem nhé!</a>
-        </p>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1qbc5qwMcM10c6YOjy9t6Y5DptBbWC5q7?usp=sharing" target="_blank">
+          🎥 Anh có đôi lời muốn nhắn nhủ tới em, em ấn vào đây nha Bica.
+        </a>
       </div>
     </div>
   </div>
@@ -65,42 +214,63 @@ body{height:100vh;overflow:hidden;font-family:'Baloo 2',cursive}
   <div class="hint">Gợi ý: Ngày tháng năm lần đầu bạn gặp người yêu bạn, ví dụ: 27112023</div>
 </div>
 
-<!-- NHẠC NỀN MP3 -->
+<!-- Nhạc nền MP3 -->
 <audio id="bgMusic" loop>
   <source src="feliz_navidad.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* SNOW */
+/* TUYẾT RƠI */
 const c=document.getElementById("snow"),x=c.getContext("2d");
 function rs(){c.width=innerWidth;c.height=innerHeight}
 rs();onresize=rs;
-let s=Array.from({length:100},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*3+1,v:Math.random()+.5}));
-(function d(){x.clearRect(0,0,c.width,c.height);x.fillStyle="rgba(255,255,255,.9)";x.beginPath();s.forEach(f=>{x.moveTo(f.x,f.y);x.arc(f.x,f.y,f.r,0,Math.PI*2);f.y+=f.v;if(f.y>c.height){f.y=0;f.x=Math.random()*c.width}});x.fill();requestAnimationFrame(d)})();
+let s=Array.from({length:100},()=>({
+  x:Math.random()*c.width,
+  y:Math.random()*c.height,
+  r:Math.random()*3+1,
+  v:Math.random()+.5
+}));
+(function draw(){x.clearRect(0,0,c.width,c.height);
+  x.fillStyle="rgba(255,255,255,.9)";
+  x.beginPath();
+  s.forEach(f=>{
+    x.moveTo(f.x,f.y);
+    x.arc(f.x,f.y,f.r,0,Math.PI*2);
+    f.y+=f.v;
+    if(f.y>c.height){f.y=0;f.x=Math.random()*c.width;}
+  });
+  x.fill();
+  requestAnimationFrame(draw);
+})();
 
-/* SCARF DRAG */
+/* KÉO KHĂN */
 const scarf=document.getElementById("scarf"),
-girl=document.getElementById("girl"),
-overlay=document.getElementById("overlay"),
-envelope=document.getElementById("envelope"),
-card=document.getElementById("card"),
-passwordBox=document.getElementById("passwordBox"),
-passwordInput=document.getElementById("passwordInput"),
-passwordBtn=document.getElementById("passwordBtn"),
-bgMusic=document.getElementById("bgMusic");
+      girl=document.getElementById("girl"),
+      overlay=document.getElementById("overlay"),
+      envelope=document.getElementById("envelope"),
+      card=document.getElementById("card"),
+      passwordBox=document.getElementById("passwordBox"),
+      passwordInput=document.getElementById("passwordInput"),
+      passwordBtn=document.getElementById("passwordBtn"),
+      bgMusic=document.getElementById("bgMusic");
 
-let drag=false;
-scarf.onpointerdown=()=>drag=true;
-onpointerup=()=>drag=false;
-onpointermove=e=>{
-  if(!drag) return;
+let dragging=false;
+scarf.onpointerdown=()=>dragging=true;
+window.onpointerup=()=>dragging=false;
+
+window.onpointermove=e=>{
+  if(!dragging) return;
   scarf.style.left=e.clientX-scarf.offsetWidth/2+"px";
   scarf.style.top=e.clientY-scarf.offsetHeight/2+"px";
-  const s=scarf.getBoundingClientRect(),g=girl.getBoundingClientRect();
-  if(s.top<g.top+g.height/3){drag=false;passwordBox.style.display="block"}
+  const sRect=scarf.getBoundingClientRect();
+  const gRect=girl.getBoundingClientRect();
+  if(sRect.top < gRect.top + gRect.height/3){
+    dragging=false;
+    passwordBox.style.display="block";
+  }
 };
 
-/* PASSWORD CHECK */
+/* KIỂM TRA MẬT KHẨU */
 passwordBtn.onclick=()=>{
   if(passwordInput.value==="26112023"){
     passwordBox.style.display="none";
@@ -109,12 +279,15 @@ passwordBtn.onclick=()=>{
     setTimeout(()=>{
       card.style.opacity=1;
       card.style.transform="scaleX(1)";
-      bgMusic.play(); // phát nhạc nền MP3
+      bgMusic.play(); // phát nhạc nền
     },1200);
-  }else{alert("Sai mật khẩu, thử lại nhé!");passwordInput.value=""}
+  } else {
+    alert("Sai mật khẩu, thử lại nhé!");
+    passwordInput.value="";
+  }
 };
 
-/* CLOSE */
+/* ĐÓNG THIỆP */
 document.getElementById("close").onclick=()=>{
   overlay.style.display="none";
   scarf.style.display="block";
@@ -123,5 +296,6 @@ document.getElementById("close").onclick=()=>{
   card.style.transform="scaleX(0)";
 };
 </script>
+
 </body>
 </html>
